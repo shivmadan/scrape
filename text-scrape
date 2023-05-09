@@ -1,0 +1,22 @@
+import requests
+from bs4 import BeautifulSoup
+
+# Get the webpage content
+url = "https://webscraper.io/test-sites/e-commerce/static "
+page = requests.get(url)
+
+soup = BeautifulSoup(page.content, 'html.parser')
+
+# Find all <p> tags on the page
+paragraphs = soup.find_all('p')
+
+# Print out the text content of each <p> tag
+for paragraph in paragraphs:
+    print(paragraph.text)
+    
+    # Create a file to save the text
+file_path = os.path.expanduser("~/Desktop/paragraph-1.txt")
+with open(file_path, "w") as f:
+    # Write out the text content of each <p> tag
+    for paragraph in paragraphs:
+        f.write(paragraph.text + "\n")
