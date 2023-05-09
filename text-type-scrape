@@ -1,0 +1,29 @@
+import requests
+import os
+from bs4 import BeautifulSoup
+
+# Get the webpage content
+url = "https://webscraper.io/test-sites/e-commerce/static"
+page = requests.get(url)
+
+soup = BeautifulSoup(page.content, 'html.parser')
+
+# Find the HTML type of the content
+content_type = soup.find('div', class_='col-md-9')
+
+# Find all tags of the content type on the page (if the content_type variable is not None)
+if content_type is not None:
+    content_tags = content_type.find_all()
+else:
+    content_tags = []
+
+# Print out the text content of each tag
+for tag in content_tags:
+    print(tag.text)
+
+# Create a file to save the text
+file_path = os.path.expanduser("~/Desktop/content.txt")
+with open(file_path, "w") as f:
+    # Write out the text content of each tag
+    for tag in content_tags:
+        f.write(tag.text + "\n")
